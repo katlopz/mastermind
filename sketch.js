@@ -16,14 +16,12 @@ function setup() {
 
 // gets called every frame
 function draw() {
-  background(0,8);
+  background(255);
   
   // practice: show computer's code
   for(i=0; i<code.length; i++) {
-    var one = new Peg(code[0], 50, 30);
-    var two = new Peg(code[1], 100, 30);
-    var three = new Peg(code[2], 150, 30);
-    var four = new Peg(code[3], 200, 30);
+    var rest = new Peg(code[i], 50+(i*50), 30);
+    rest.display();
   }
   
 }

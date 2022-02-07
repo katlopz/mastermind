@@ -34,14 +34,7 @@ function setup() {
 
 // gets called every frame
 function draw() {
-  if(gameOver) return;
   background(255);
-  
-  // practice: show computer's code
-  for(i=0; i<code.length; i++) {
-    var rest = new Peg(code[i], windowWidth-(columnWidth/2), (columnWidth/2)+(columnWidth*i));
-    rest.display();
-  }
   
   //show buttons
   for(i=0; i<buttons.length; i++) {
@@ -63,7 +56,26 @@ function draw() {
     }
   }
   
+  //game over scenarios
+  if(guesses.length==maxGuess) gameOver = true;
+  if(feedback[feedback.length-1] != null) {
+    var red = 0;
+    if(feedback[feedback.length-1].length == 4) {
+      for(i=0; i<4; i++) {
+        if(feedback[feedback.length-1][i].col == "red") red++;
+      }
+      if(red == 4) gameOver = true;
+    }
+  }
   
+  if(gameOver) { //show answer
+    // practice: show computer's code
+    for(i=0; i<code.length; i++) {
+      var rest = new Peg(code[i], windowWidth-(columnWidth/2), (columnWidth/2)+(columnWidth*i));
+      rest.display();
+    }
+    return;
+  }
   
   //show current guess
   for(i=0; i<currentGuess.length; i++) {
@@ -109,13 +121,6 @@ function draw() {
     }
     guesses.push(rest);
     currentGuess = [];
-  }
-  
-  //game over scenarios
-  if(guesses.length==maxGuess) gameOver = true;
-  if(feedback[feedback.length-1] != null) {
-    var red = 0;
-    
   }
 }
 

@@ -92,7 +92,7 @@ function draw() {
     for(i=0; i<4; i++) {   
       if(currentGuess[i].col == code[i]) {
         print("red");
-        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth*4)+(rest.length*10)) );
+        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
         addressed.push(i)//i in code has been addressed
         continue;
       }
@@ -105,7 +105,7 @@ function draw() {
         
         if(currentGuess[i].col == code[j]) {
           print("white");
-          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth*4)+(rest.length*10)) );
+          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
           addressed.push(j);
           break;
         }
@@ -207,7 +207,7 @@ class Key {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = 2.5;
+    this.rad = columnWidth/8;
   }
 
   display() {

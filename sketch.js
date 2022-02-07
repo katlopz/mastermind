@@ -1,3 +1,5 @@
+
+   
 // fields
 var col = ["red", "orange", "yellow", "green", "blue", "purple"];
 var code = [];
@@ -84,33 +86,37 @@ function draw() {
   
   //check guess 
   if(currentGuess.length==4) {
-    //check guess 
-    addressed = [];
+
     rest = [];
+    addressed = [];
+    //counts
+    var r = 0;
+    var w = 0;
     
-    //right colour, right place
-    for(i=0; i<4; i++) {   
-      if(currentGuess[i].col == code[i]) {
-        print("red");
-        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
+    for(i=0; i<4; i++) {  
+      //right colour, right place
+      if(currentGuess[i].col == code[i]) { 
+        r++;
         addressed.push(i)//i in code has been addressed
         continue;
       }
-    }
-    //right colour, wrong place
-    for(i=0; i<4; i++) {   
+      //right colour, wrong place
       for(j=0; j<4; j++) {
        if(j==i) continue;
        if(addressed.includes(j)) continue;
         
         if(currentGuess[i].col == code[j]) {
-          print("white");
-          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
+          w++;
           addressed.push(j);
           break;
         }
-      }  
+      }
     }
+    
+    // Load feedback
+    for(i=0; i<r; i++) rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
+    for(i=0; i<w; i++) rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*4)+(rest.length*(columnWidth/4)) ) );
+    
     if(addressed.length != 0) feedback.push(rest);
     else feedback.push(null);
     

@@ -7,7 +7,8 @@ var guesses = [];
 var feedback = [];
 var currentGuess = []; //just colour names
 var gameOver = false;
-var radius = 20; 
+var columnWidth = 0;
+var radius = 0; 
 
 //red = correct place, white = correct colour wrong place
 
@@ -17,7 +18,8 @@ function setup() {
   background(0,0,20);
   noStroke();
   
-  radius = ((windowWidth/(maxGuess+2)) - 20)/2;
+  columnWidth = (windowWidth/(maxGuess+2));
+  radius = (columnWidth*(2/3))/2;
   
   //computer picks code 
   for(i = 0; i<4; i++) {
@@ -26,7 +28,7 @@ function setup() {
   
   //create buttons 
   for(i = 0; i<col.length; i++) {
-    buttons.push(new Button (col[i], 10, 50+(i*50)));
+    buttons.push(new Button (col[i], columnWidth/2, 50+(i*50)));
   }
 }
 
@@ -37,7 +39,7 @@ function draw() {
   
   // practice: show computer's code
   for(i=0; i<code.length; i++) {
-    var rest = new Peg(code[i], windowWidth-10, 50+(i*50));
+    var rest = new Peg(code[i], windowWidth-(columnWidth/2), 50+(i*50));
     rest.display();
   }
   
@@ -80,7 +82,7 @@ function draw() {
     for(i=0; i<4; i++) {   
       if(currentGuess[i].col == code[i]) {
         print("red");
-        rest.push(new Key ("red", (25+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
+        rest.push(new Key ("red", ((columnWidth/2)+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
         addressed.push(i)//i in code has been addressed
         continue;
       }
@@ -93,7 +95,7 @@ function draw() {
         
         if(currentGuess[i].col == code[j]) {
           print("white");
-          rest.push(new Key ("white", (25+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
+          rest.push(new Key ("white", ((columnWidth/2)+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
           addressed.push(j);
           break;
         }
@@ -127,7 +129,7 @@ function mouseReleased() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
     if(buttons[i].on) {
-      currentGuess.push(new Peg (buttons[i].col, (25+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
+      currentGuess.push(new Peg (buttons[i].col, ((columnWidth/2)+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
     }
   }
   

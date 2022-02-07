@@ -57,10 +57,8 @@ function draw() {
   
   //show feedback
   for(i=0; i<feedback.length; i++) {
-    print(i);
+    if(feedback[i] == null) continue;
     for(j=0; j<4; j++) {
-      
-      print(j);
       feedback[i][j].display();
     }
   }
@@ -82,7 +80,7 @@ function draw() {
     for(i=0; i<4; i++) {   
       if(currentGuess[i].col == code[i]) {
         print("red");
-        rest.push(new Key ("red", ((columnWidth/2)+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
+        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), 250+(rest.length*10)) );
         addressed.push(i)//i in code has been addressed
         continue;
       }
@@ -95,13 +93,14 @@ function draw() {
         
         if(currentGuess[i].col == code[j]) {
           print("white");
-          rest.push(new Key ("white", ((columnWidth/2)+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
+          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), 250+(rest.length*10)) );
           addressed.push(j);
           break;
         }
       }  
     }
-    feedback.push(rest);
+    if(addressed.length != 0) feedback.push(rest);
+    else feedback.push(null);
     
     //bank this guess
     var rest = [];
@@ -129,7 +128,7 @@ function mouseReleased() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
     if(buttons[i].on) {
-      currentGuess.push(new Peg (buttons[i].col, ((columnWidth/2)+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
+      currentGuess.push(new Peg (buttons[i].col, (columnWidth/2)+(columnWidth*(guesses.length+1)), 50+(currentGuess.length*50)) );
     }
   }
   

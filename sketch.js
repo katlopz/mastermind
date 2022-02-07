@@ -28,7 +28,7 @@ function setup() {
   
   //create buttons 
   for(i = 0; i<col.length; i++) {
-    buttons.push(new Button (col[i], columnWidth/2, 50+(i*50)));
+    buttons.push(new Button (col[i], columnWidth/2, (columnWidth/2)+(columnWidth*i) ));
   }
 }
 
@@ -39,7 +39,7 @@ function draw() {
   
   // practice: show computer's code
   for(i=0; i<code.length; i++) {
-    var rest = new Peg(code[i], windowWidth-(columnWidth/2), 50+(i*50));
+    var rest = new Peg(code[i], windowWidth-(columnWidth/2), (columnWidth/2)+(columnWidth*i));
     rest.display();
   }
   
@@ -58,7 +58,7 @@ function draw() {
   //show feedback
   for(i=0; i<feedback.length; i++) {
     if(feedback[i] == null) continue;
-    for(j=0; j<4; j++) {
+    for(j=0; j<feedback[i].length; j++) { //not all feedback has pegs
       feedback[i][j].display();
     }
   }
@@ -80,7 +80,7 @@ function draw() {
     for(i=0; i<4; i++) {   
       if(currentGuess[i].col == code[i]) {
         print("red");
-        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), 250+(rest.length*10)) );
+        rest.push(new Key ("red", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth*4)+(rest.length*10)) );
         addressed.push(i)//i in code has been addressed
         continue;
       }
@@ -93,7 +93,7 @@ function draw() {
         
         if(currentGuess[i].col == code[j]) {
           print("white");
-          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), 250+(rest.length*10)) );
+          rest.push(new Key ("white", (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth*4)+(rest.length*10)) );
           addressed.push(j);
           break;
         }
@@ -109,10 +109,14 @@ function draw() {
     }
     guesses.push(rest);
     currentGuess = [];
-    
-    if(guesses.length==maxGuess) gameOver = true;
   }
   
+  //game over scenarios
+  if(guesses.length==maxGuess) gameOver = true;
+  if(feedback[feedback.length-1] != null) {
+    var red = 0;
+    
+  }
 }
 
 // mouse moved
@@ -128,7 +132,7 @@ function mouseReleased() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
     if(buttons[i].on) {
-      currentGuess.push(new Peg (buttons[i].col, (columnWidth/2)+(columnWidth*(guesses.length+1)), 50+(currentGuess.length*50)) );
+      currentGuess.push(new Peg (buttons[i].col, (columnWidth/2)+(columnWidth*(guesses.length+1)), (columnWidth/2)+(columnWidth*currentGuess.length) ) ); 
     }
   }
   

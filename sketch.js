@@ -8,6 +8,8 @@ var currentGuess = []; //just colour names
 var gameOver = false;
 var radius = 20; 
 
+//red = correct place, white = correct colour wrong place
+
 // only once
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -58,6 +60,31 @@ function draw() {
   
   //check guess 
   if(currentGuess.length==4) {
+    //check guess 
+    addressed = [];
+    
+    //right colour, right place
+    for(i=0; i<4; i++) {   
+      if(currentGuess[i].col == code[i]) {
+        print("red");
+        addressed.push(i)//i in code has been addressed
+        continue;
+      }
+    }
+    //right colour, wrong place
+    for(i=0; i<4; i++) {   
+      for(j=0; j<4; j++) {
+       if(j==i) continue;
+       if(addressed.includes(j)) continue;
+        
+        if(currentGuess[i].col == code[j]) {
+          print("white");
+          addressed.push(j);
+          break;
+        }
+      }  
+     }
+    
     //bank this guess
     var rest = [];
     for(i=0; i<4; i++) {
@@ -84,7 +111,7 @@ function mouseReleased() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
     if(buttons[i].on) {
-      currentGuess.push(new Peg (buttons[i].col, (30+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
+      currentGuess.push(new Peg (buttons[i].col, (25+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
     }
   }
   

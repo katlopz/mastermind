@@ -3,12 +3,18 @@ var col = ["red", "orange", "yellow", "green", "blue", "purple"];
 var code = [];
 var maxGuess = 12;
 var buttons = [];
+var guesses = [];
+var currentGuess = []; //just colour names
+var gameOver = false;
+var radius = 20; 
 
 // only once
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0,0,20);
   noStroke();
+  
+  radius = ((windowWidth/(maxGuess+2)) - 20)/2;
   
   //computer picks code 
   for(i = 0; i<4; i++) {
@@ -19,12 +25,11 @@ function setup() {
   for(i = 0; i<col.length; i++) {
     buttons.push(new Button (col[i], 10, 50+(i*50)));
   }
-  
-  print((windowWidth/(maxGuess+2)) - 20); 
 }
 
 // gets called every frame
 function draw() {
+  if(gameOver) return;
   background(255);
   
   // practice: show computer's code
@@ -38,6 +43,26 @@ function draw() {
     buttons[i].display();
   }
   
+  //show guesses
+  for(i=0; i<guesses.length; i++) {
+    for(j=0; j<4; j++) {
+      guesses[i][j].display();
+    }
+  }
+  
+  //check guess 
+  if(currentGuess.length==4) {
+    //bank this guess
+    var rest = [];
+    for(i=0; i<4; i++) {
+      rest.push(new Peg(currentGuess[i], (20+(radius*2))*(guesses.length), 50+(i*50)));
+    }
+    guesses.push(rest);
+    currentGuess = [];
+    
+    if(guesses.length==maxGuess) gameOver = true;
+  }
+  
 }
 
 // mouse moved
@@ -48,19 +73,14 @@ function mouseMoved() {
   }
 }
 
-// mouse pressed
-function mousePressed() {
-
-}
-
-// mouse dragged
-function mouseDragged() {
-
-}  
-
 // mouse released
 function mouseReleased() {
-
+  //check buttons
+  for(i=0; i<buttons.length; i++) {
+    if(buttons[i].isOn(mouseX, mouseY)) {
+      currentGuess.push(buttons[i].col);
+    }
+  }
 }
 
 class Peg {
@@ -70,7 +90,7 @@ class Peg {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = ((windowWidth/(maxGuess+2)) - 20)/2; 
+    this.rad = radius;
   }
 
   display() {
@@ -89,7 +109,7 @@ class Button {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = ((windowWidth/(maxGuess+2)) - 20)/2; 
+    this.rad = radius;
 
     this.on = false;
   }

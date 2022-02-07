@@ -4,6 +4,7 @@ var code = [];
 var maxGuess = 12;
 var buttons = [];
 var guesses = [];
+var feedback = [];
 var currentGuess = []; //just colour names
 var gameOver = false;
 var radius = 20; 
@@ -52,21 +53,34 @@ function draw() {
     }
   }
   
+  //show feedback
+  for(i=0; i<feedback.length; i++) {
+    print(i);
+    for(j=0; j<4; j++) {
+      
+      print(j);
+      feedback[i][j].display();
+    }
+  }
+  
+  
+  
   //show current guess
   for(i=0; i<currentGuess.length; i++) {
     currentGuess[i].display();
   }
   
-  
   //check guess 
   if(currentGuess.length==4) {
     //check guess 
     addressed = [];
+    rest = [];
     
     //right colour, right place
     for(i=0; i<4; i++) {   
       if(currentGuess[i].col == code[i]) {
         print("red");
+        rest.push(new Key ("red", (25+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
         addressed.push(i)//i in code has been addressed
         continue;
       }
@@ -79,11 +93,13 @@ function draw() {
         
         if(currentGuess[i].col == code[j]) {
           print("white");
+          rest.push(new Key ("white", (25+(radius*2))*(guesses.length+1), 250+(rest.length*10) ) );
           addressed.push(j);
           break;
         }
       }  
-     }
+    }
+    feedback.push(rest);
     
     //bank this guess
     var rest = [];
@@ -129,7 +145,6 @@ class Peg {
   }
 
   display() {
-    //background colour change
     fill(this.col);
     
     noStroke();
@@ -172,5 +187,24 @@ class Button {
       }
     }
     this.on = false;
+  }
+}
+
+class Key {
+  constructor(col, xval, yval) {
+    this.col = col;
+    
+    this.x = xval; 
+    this.y = yval; 
+
+    this.rad = 2.5;
+  }
+
+  display() {
+    fill(this.col);
+    
+    stroke(0)
+    strokeWeight(1);
+    circle(this.x, this.y, this.rad*2);
   }
 }

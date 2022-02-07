@@ -50,12 +50,18 @@ function draw() {
     }
   }
   
+  //show current guess
+  for(i=0; i<currentGuess.length; i++) {
+    currentGuess[i].display();
+  }
+  
+  
   //check guess 
   if(currentGuess.length==4) {
     //bank this guess
     var rest = [];
     for(i=0; i<4; i++) {
-      rest.push(new Peg(currentGuess[i], (20+(radius*2))*(guesses.length), 50+(i*50)));
+      rest.push(currentGuess[i]);
     }
     guesses.push(rest);
     currentGuess = [];
@@ -77,10 +83,12 @@ function mouseMoved() {
 function mouseReleased() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
-    if(buttons[i].isOn(mouseX, mouseY)) {
-      currentGuess.push(buttons[i].col);
+    if(buttons[i].on) {
+      currentGuess.push(new Peg (buttons[i].col, (30+(radius*2))*(guesses.length+1), 50+(currentGuess.length*50) ) );
     }
   }
+  
+  
 }
 
 class Peg {

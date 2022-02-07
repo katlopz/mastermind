@@ -1,6 +1,7 @@
 // fields
 var col = ["red", "orange", "yellow", "green", "blue", "purple"];
 var code = [];
+var maxGuess = 12;
 
 // only once
 function setup() {
@@ -20,7 +21,7 @@ function draw() {
   
   // practice: show computer's code
   for(i=0; i<code.length; i++) {
-    var rest = new Peg(code[i], 50+(i*50), 30);
+    var rest = new Peg(code[i], windowWidth-10, 50+(i*50));
     rest.display();
   }
   
@@ -53,7 +54,7 @@ class Peg {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = 20; 
+    this.rad = (windowWidth/(maxGuess+2) - 20); 
   }
 
   display() {
@@ -73,7 +74,7 @@ class Button {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = 20; 
+    this.rad = (windowWidth/(maxGuess+2) - 20); 
 
     this.on = false;
   }

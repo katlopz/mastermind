@@ -18,8 +18,9 @@ function setup() {
   //create buttons 
   for(i = 0; i<col.length; i++) {
     buttons.push(new Button (col[i], 10, 50+(i*50)));
-    print(col[i]);
   }
+  
+  print((windowWidth/(maxGuess+2)) - 20); 
 }
 
 // gets called every frame
@@ -69,7 +70,7 @@ class Peg {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = (windowWidth/(maxGuess+2) - 20); 
+    this.rad = ((windowWidth/(maxGuess+2)) - 20)/2; 
   }
 
   display() {
@@ -88,7 +89,7 @@ class Button {
     this.x = xval; 
     this.y = yval; 
 
-    this.rad = (windowWidth/(maxGuess+2) - 20); 
+    this.rad = ((windowWidth/(maxGuess+2)) - 20)/2; 
 
     this.on = false;
   }

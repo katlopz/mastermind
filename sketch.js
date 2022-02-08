@@ -10,6 +10,8 @@ var gameOver = false;
 var columnWidth = 0;
 var radius = 0; 
 var back = null;
+var fontSize = 0; // 1/3 size of button 
+var letWidth = 0;
 
 //red = correct place, white = correct colour wrong place
 
@@ -34,6 +36,10 @@ function setup() {
   
   //create back button
   back = new Button("black", columnWidth/2, (columnWidth/2)+(columnWidth*6));
+  
+  fontSize = (radius*2)/3; // 1/3 size of button 
+  letWidth = fontSize/2;
+  textSize(fontSize);
 }
 
 // gets called every frame
@@ -47,6 +53,12 @@ function draw() {
   
   //show back button
   back.display();
+  
+  //show instructions
+  text("You must break the 4 colour secret code in the fewest number of guesses", windowWidth/4, windowHeight-(fontSize*3));
+  text("The smaller red pegs show the number of pegs that are the correct colors in the correct positions", windowWidth/4, windowHeight-(fontSize*2));
+  text("The smaller white pegs show the number of pegs that are the correct colors in the wrong positions", windowWidth/4, windowHeight-fontSize);
+  
   
   //show guesses
   for(i=0; i<guesses.length; i++) {
@@ -221,9 +233,6 @@ class Button {
     if(this.col == "black") {
       fill(0);
       noStroke();
-      var fontSize = (this.rad*2)/3; // 1/3 size of button 
-      var letWidth = fontSize/2;
-      textSize(fontSize);   
       text("Back", this.x-(letWidth*2), this.y-this.rad-3); //assume width of letter if half the font size
     }
   }

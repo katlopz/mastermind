@@ -9,6 +9,7 @@ var currentGuess = []; //just colour names
 var gameOver = false;
 var columnWidth = 0;
 var radius = 0; 
+var back = null;
 
 //red = correct place, white = correct colour wrong place
 
@@ -30,6 +31,9 @@ function setup() {
   for(i = 0; i<col.length; i++) {
     buttons.push(new Button (col[i], columnWidth/2, (columnWidth/2)+(columnWidth*i) ));
   }
+  
+  //create back button
+  back = new Button("black", columnWidth/2, (columnWidth/2)+(columnWidth*6));
 }
 
 // gets called every frame
@@ -40,6 +44,9 @@ function draw() {
   for(i=0; i<buttons.length; i++) {
     buttons[i].display();
   }
+  
+  //show back button
+  back.display();
   
   //show guesses
   for(i=0; i<guesses.length; i++) {
@@ -142,6 +149,9 @@ function mouseMoved() {
   for(i=0; i<buttons.length; i++) {
     buttons[i].isOn(mouseX, mouseY);
   }
+  
+  //check back
+  back.isOn(mouseX, mouseY);
 }
 
 // mouse released
@@ -153,6 +163,11 @@ function mouseReleased() {
     }
   }
   
+  //check back
+  if(back.on && currentGuess.length != 0 && currentGuess.length != 4) {
+    //delete last peg on current guess
+    currentGuess.pop();
+  }
   
 }
 
@@ -187,17 +202,26 @@ class Button {
   }
 
   display() {
-    
-
     fill(this.col);
     stroke(0); 
     strokeWeight(2);
-    circle(this.x, this.y, this.rad*2); //centre x and y
+    rectMode(CENTER);
+    if(this.col == "black") rect(this.x, this.y, this.rad*2, this.rad*2);
+    else circle(this.x, this.y, this.rad*2); //centre x and y
     
     // colour change
     if(this.on) {
       fill(255, 200);
-      circle(this.x, this.y, this.rad*2);
+      
+      if(this.col == "black") rect(this.x, this.y, this.rad*2, this.rad*2);
+      else circle(this.x, this.y, this.rad*2); //centre x and y
+    }
+    
+    //optional text
+    if(this.col == "black") {
+      fill(0);
+      noStroke();
+      text("Back", this.x-this.rad+3, this.y+(columnWidth/2)+3);
     }
   }
   

@@ -166,8 +166,8 @@ function mouseMoved() {
   back.isOn(mouseX, mouseY);
 }
 
-// mouse released
-function mouseReleased() {
+// mouse clicked
+function mouseClicked() {
   //check buttons
   for(i=0; i<buttons.length; i++) {
     if(buttons[i].on) {

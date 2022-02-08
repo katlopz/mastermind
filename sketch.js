@@ -221,7 +221,10 @@ class Button {
     if(this.col == "black") {
       fill(0);
       noStroke();
-      text("Back", this.x-this.rad+3, this.y-this.rad-3);
+      var fontSize = (this.rad*2)/3; // 1/3 size of button 
+      var letWidth = fontSize/2;
+      textSize(fontSize);   
+      text("Back", this.x-(letWidth*2), this.y-this.rad-3); //assume width of letter if half the font size
     }
   }
   

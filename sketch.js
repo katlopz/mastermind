@@ -56,8 +56,8 @@ function draw() {
   
   //show instructions
   text("You must break the 4 colour secret code in the fewest number of guesses", windowWidth/4, windowHeight-(fontSize*3));
-  text("The smaller red pegs show the number of pegs that are the correct colors in the correct positions", windowWidth/4, windowHeight-(fontSize*2));
-  text("The smaller white pegs show the number of pegs that are the correct colors in the wrong positions", windowWidth/4, windowHeight-fontSize);
+  text("The red dots show the number of pegs that are the correct colors in the correct positions", windowWidth/4, windowHeight-(fontSize*2));
+  text("The white dots show the number of pegs that are the correct colors in the wrong positions", windowWidth/4, windowHeight-fontSize);
   
   
   //show guesses

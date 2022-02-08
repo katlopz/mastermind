@@ -221,7 +221,7 @@ class Button {
     if(this.col == "black") {
       fill(0);
       noStroke();
-      text("Back", this.x-this.rad+3, this.y+(columnWidth/2)+3);
+      text("Back", this.x-this.rad+3, this.y-this.rad-3);
     }
   }
   
